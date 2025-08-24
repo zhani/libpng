@@ -1,0 +1,15 @@
+#!/usr/bin/make -f
+
+export DEB_BUILD_MAINT_OPTIONS   := hardening=+all
+export DEB_CFLAGS_MAINT_APPEND   := $(shell dpkg-buildflags --get CPPFLAGS)
+export DEB_CXXFLAGS_MAINT_APPEND := $(shell dpkg-buildflags --get CPPFLAGS)
+
+%:
+	dh $@
+
+include /usr/share/dpkg/architecture.mk
+
+override_dh_auto_test:
+
+override_dh_makeshlibs:
+	dh_makeshlibs --add-udeb=libpng16-16-udeb -a
